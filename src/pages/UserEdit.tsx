@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router"
-import { useState } from "react"
+import React, { useState } from "react"
 
 import { toast } from "sonner"
 import type { User } from "@/types/user"
@@ -23,22 +23,33 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
+import useFethUserDetails from "@/hooks/useFethUserDetails"
 
 export function UserEdit() {
-  const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { id } = useParams()
 
-  const user = mockUsers.find((u) => u.id === id)
+  const user = useFethUserDetails(id)
 
-  const [formData, setFormData] = useState<Partial<User>>(
-    user || {
-      name: "",
-      email: "",
-      type: "Usuário",
-      status: "Ativo",
-    },
-  )
+  const [formData, setFormData] = useState<Partial<User>>({
+    name: "",
+    email: "",
+    type: "usuario",
+    status: "Ativo",
+  })
+
   const [isLoading, setIsLoading] = useState(false)
+
+  React.useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        type: user.type || "usuario",
+        status: user.status || "Ativo",
+      })
+    }
+  }, [user])
 
   if (!user) {
     return (
@@ -129,9 +140,9 @@ export function UserEdit() {
                   <SelectValue placeholder="Selecione o perfil" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Admin">Admin</SelectItem>
-                  <SelectItem value="Gerente">Gerente</SelectItem>
-                  <SelectItem value="Usuário">Usuário</SelectItem>
+                  <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="gerente">Gerente</SelectItem>
+                  <SelectItem value="usuario">Usuário</SelectItem>
                 </SelectContent>
               </Select>
             </div>

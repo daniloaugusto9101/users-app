@@ -1,8 +1,8 @@
 export interface User {
-    id: string;
+    id: number;
     name: string;
     email: string;
-    type: 'Admin' | 'Usuário' | 'Gerente';
+    type: 'admin' | 'usuario' | 'gerente';
     status: 'Ativo' | 'Inativo';
     createdAt: string;
 }

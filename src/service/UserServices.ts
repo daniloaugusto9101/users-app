@@ -4,10 +4,10 @@ const getUsers = async () => {
     const { data } = await api.get('/users');
     return data;
 };
-// const getCarDetails = async (id) => {
-//     const { data } = await api.get(`/cars/${id}`);
-//     return data;
-// };
+const getUserDetails = async (idUser: string) => {
+    const { data } = await api.get(`/users/id/${idUser}`);
+    return data;
+};
 
 // const postCar = async (car) => {
 //     const { data } = await api.post(`/cars/`, car);
@@ -31,7 +31,7 @@ const getUsers = async () => {
 
 export default {
     getUsers,
-    // getCarDetails,
+    getUserDetails,
     // postCar,
     // deleteCar,
     // postFinance,
