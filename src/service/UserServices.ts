@@ -1,4 +1,5 @@
 import api from "@/config/http";
+import type { User } from "@/types/user";
 
 const getUsers = async () => {
     const { data } = await api.get('/users');
@@ -14,6 +15,12 @@ const deleteUser = async (idUser: string) => {
     return data;
 };
 
+const editUser = async (user: User) => {
+    const { data } = await api.put(`/users/${user.id}`, user);
+    console.log("Resposta da API:", data); // Log para verificar a resposta
+    return data;
+};
+
 // const postCar = async (car) => {
 //     const { data } = await api.post(`/cars/`, car);
 //     return data;
@@ -25,17 +32,13 @@ const deleteUser = async (idUser: string) => {
 //     return data;
 // };
 
-// const editCar = async (idCar, updatedCarData) => {
-//     const { data } = await api.put(`/cars/${idCar}`, updatedCarData);
-//     return data;
-// };
 
 export default {
     getUsers,
     getUserDetails,
-    deleteUser
+    deleteUser,
+    editUser
     // postCar,
     // deleteCar,
     // postFinance,
-    // editCar,
 };

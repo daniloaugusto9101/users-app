@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router";
 import React, { useState } from "react";
-
 import { toast } from "sonner";
 import type { User } from "@/types/user";
 import { Button } from "@/components/ui/button";
@@ -11,12 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import useFethUserDetails from "@/hooks/useFethUserDetails";
+import useEditUser from "@/hooks/useEditUser";
 
 export function UserEdit() {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const user = useFethUserDetails(id);
+
+  const { editUser, isEditingUser, editUserError } = useEditUser();
 
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
@@ -38,6 +40,25 @@ export function UserEdit() {
     }
   }, [user]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.email) {
+      toast.error("Por favor, preencha todos os campos obrigatórios");
+      return;
+    }
+
+    const updatedUser = await editUser({ ...formData, id: Number(id) } as User);
+
+    if (!updatedUser) {
+      toast.error("Erro ao atualizar usuário");
+      return;
+    }
+
+    toast.success("Usuário atualizado com sucesso!");
+    navigate("/");
+  };
+
   if (!user) {
     return (
       <div className="space-y-6">
@@ -53,24 +74,6 @@ export function UserEdit() {
       </div>
     );
   }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.name || !formData.email) {
-      toast.error("Por favor, preencha todos os campos obrigatórios");
-      return;
-    }
-
-    setIsLoading(true);
-
-    // Simular chamada de API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setIsLoading(false);
-    toast.success("Usuário atualizado com sucesso!");
-    navigate("/");
-  };
 
   return (
     <div className="space-y-6 max-w-2xl">

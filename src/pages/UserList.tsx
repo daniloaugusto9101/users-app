@@ -49,7 +49,7 @@ export default function UserList() {
             <Card key={user.id} className="group relative overflow-hidden hover:shadow-md transition-all">
               {/* Status Badge no canto */}
               <div className="absolute top-3 right-3">
-                <Badge variant={user.status === "Ativo" ? "default" : "secondary"}>{user.status}</Badge>
+                <Badge variant={user.status === "Ativo" ? "default" : "secondary"}>ID: {user.id}</Badge>
               </div>
 
               <CardHeader className="pb-3">

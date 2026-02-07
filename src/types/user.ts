@@ -4,5 +4,4 @@ export interface User {
     email: string;
     type: 'admin' | 'usuario' | 'gerente';
     status: 'Ativo' | 'Inativo';
-    createdAt: string;
 }
