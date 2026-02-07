@@ -8,29 +8,20 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { mockUsers } from "@/lib/mock-data"
-import { Eye, Mail, Pencil, Trash2, UserPlus } from "lucide-react"
+import { Eye, Mail, Pencil, Trash2 } from "lucide-react"
 import React from "react"
-import { useNavigate } from "react-router-dom"
 import type { User } from "@/types/user"
+import HeaderUserList from "@/components/HeaderUserList"
+import { useNavigate } from "react-router-dom"
 
 export default function UserList() {
   const [users, setUsers] = React.useState<User[]>(mockUsers)
   const navigate = useNavigate()
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Usuários</h2>
-          <p className="text-muted-foreground">
-            Gerencie os usuários do sistema
-          </p>
-        </div>
-        <Button onClick={() => navigate("/users/new")}>
-          <UserPlus className="mr-2 h-4 w-4" />
-          Novo Usuário
-        </Button>
-      </div>
+      <HeaderUserList />
 
       {/* Cards Grid */}
       {users.length === 0 ? (
