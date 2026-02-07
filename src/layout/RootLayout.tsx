@@ -1,15 +1,15 @@
-import { Outlet } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/Header";
 
-export default function RootLayout() {
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container mx-auto px-4 py-6">
-        <Outlet />
-      </main>
-
+      <main className="container mx-auto px-4 py-6">{children}</main>
       <Toaster />
     </div>
   );
