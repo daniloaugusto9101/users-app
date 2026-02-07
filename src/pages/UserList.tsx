@@ -13,10 +13,30 @@ import React from "react"
 import type { User } from "@/types/user"
 import HeaderUserList from "@/components/HeaderUserList"
 import { useNavigate } from "react-router-dom"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { toast } from "sonner"
 
 export default function UserList() {
-  const [users, setUsers] = React.useState<User[]>(mockUsers)
   const navigate = useNavigate()
+  const [users, setUsers] = React.useState<User[]>(mockUsers)
+  const [userToDelete, setUserToDelete] = React.useState<User | null>(null)
+
+  const handleDelete = () => {
+    if (userToDelete) {
+      setUsers(users.filter((u) => u.id !== userToDelete.id))
+      toast.success("Usuário excluído com sucesso!")
+      setUserToDelete(null)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -97,7 +117,7 @@ export default function UserList() {
                     variant="ghost"
                     size="sm"
                     className="h-8"
-                    // onClick={() => setUserToDelete(user)}
+                    onClick={() => setUserToDelete(user)}
                   >
                     <Trash2 className="h-3.5 w-3.5 text-destructive" />
                   </Button>
@@ -107,6 +127,32 @@ export default function UserList() {
           ))}
         </div>
       )}
+
+      {/* Modal de confirmação de exclusão */}
+      <AlertDialog
+        open={!!userToDelete}
+        onOpenChange={() => setUserToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja excluir o usuário{" "}
+              <strong>{userToDelete?.name}</strong>? Esta ação é irreversível e
+              não poderá ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Confirmar exclusão
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
