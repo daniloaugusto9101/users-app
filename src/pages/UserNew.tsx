@@ -9,14 +9,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import useCreateUser from "@/hooks/useCreateUser";
 
 export function UserNew() {
   const navigate = useNavigate();
 
+  const { createUser, isCreatingUser, createUserError } = useCreateUser();
+
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
     email: "",
-    type: "Usuário",
+    type: "usuario",
     status: "Ativo",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -29,12 +32,13 @@ export function UserNew() {
       return;
     }
 
-    setIsLoading(true);
+    const newUser = await createUser(formData as Omit<User, "id">);
 
-    // Simular chamada de API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (!newUser) {
+      toast.error("Erro ao criar usuário");
+      return;
+    }
 
-    setIsLoading(false);
     toast.success("Usuário criado com sucesso!");
     navigate("/");
   };

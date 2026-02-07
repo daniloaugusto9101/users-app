@@ -12,7 +12,6 @@ const useEditUser = () => {
     setEditUserError(null);
 
     try {
-      console.log("Payload enviado para edição:", payload); // Log para verificar o payload
       const updatedUser = await UserServices.editUser(payload);
       return updatedUser;
     } catch (err) {

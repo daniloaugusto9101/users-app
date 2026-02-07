@@ -21,24 +21,18 @@ const editUser = async (user: User) => {
     return data;
 };
 
-// const postCar = async (car) => {
-//     const { data } = await api.post(`/cars/`, car);
-//     return data;
-// };
+const createUser = async (user: Omit<User, 'id'>) => {
+    const { data } = await api.post(`/users/`, user);
+    return data;
+};
 
 
-// const postFinance = async (cliente) => {
-//     const { data } = await api.post(`/cars/finance`, cliente);
-//     return data;
-// };
 
 
 export default {
     getUsers,
     getUserDetails,
     deleteUser,
-    editUser
-    // postCar,
-    // deleteCar,
-    // postFinance,
+    editUser,
+    createUser
 };
