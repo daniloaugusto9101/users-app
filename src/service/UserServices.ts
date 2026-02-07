@@ -9,15 +9,16 @@ const getUserDetails = async (idUser: string) => {
     return data;
 };
 
+const deleteUser = async (idUser: string) => {
+    const { data } = await api.delete(`/users/id/${idUser}`);
+    return data;
+};
+
 // const postCar = async (car) => {
 //     const { data } = await api.post(`/cars/`, car);
 //     return data;
 // };
 
-// const deleteCar = async (idCar) => {
-//     const { data } = await api.delete(`/cars/${idCar}`);
-//     return data;
-// };
 
 // const postFinance = async (cliente) => {
 //     const { data } = await api.post(`/cars/finance`, cliente);
@@ -32,6 +33,7 @@ const getUserDetails = async (idUser: string) => {
 export default {
     getUsers,
     getUserDetails,
+    deleteUser
     // postCar,
     // deleteCar,
     // postFinance,

@@ -24,18 +24,27 @@ import {
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner"
 import useFetchUsers from "@/hooks/useFetchUsers"
+import useDeleteUser from "@/hooks/useDeleteUser"
 
 export default function UserList() {
   const navigate = useNavigate()
   const [userToDelete, setUserToDelete] = React.useState<User | null>(null)
 
-  const { users } = useFetchUsers()
+  const { users, fetchUsers } = useFetchUsers()
+  const { deleteUser } = useDeleteUser()
 
   const handleDelete = () => {
     if (userToDelete) {
-      setUsers(users.filter((u) => u.id !== userToDelete.id))
-      toast.success("Usuário excluído com sucesso!")
-      setUserToDelete(null)
+      deleteUser(userToDelete.id.toString())
+        .then(() => {
+          toast.success("Usuário excluído com sucesso!")
+          setUserToDelete(null)
+          fetchUsers()
+        })
+        .catch((err) => {
+          toast.error("Erro ao excluir usuário")
+          console.error(err)
+        })
     }
   }
 

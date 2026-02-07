@@ -17,9 +17,9 @@ const useFetchUsers = () => {
 
     React.useEffect(() => {
         fetchUsers();
-    }, [setUsers]);
+    }, []);
 
-    return { users };
+    return { users, fetchUsers };
 };
 
 export default useFetchUsers;
