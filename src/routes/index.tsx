@@ -1,5 +1,7 @@
+import ProtectedRoute from "@/components/ProtectedRoute";
 import RootLayout from "@/layout/RootLayout";
 import { Login } from "@/pages/Login";
+import { NotFound } from "@/pages/NotFound";
 import { UserEdit } from "@/pages/UserEdit";
 import UserList from "@/pages/UserList";
 import { UserNew } from "@/pages/UserNew";
@@ -14,25 +16,35 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <RootLayout>
-        <UserList />
-      </RootLayout>
+      <ProtectedRoute>
+        <RootLayout>
+          <UserList />
+        </RootLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/users/new",
     element: (
-      <RootLayout>
-        <UserNew />
-      </RootLayout>
+      <ProtectedRoute>
+        <RootLayout>
+          <UserNew />
+        </RootLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/users/:id/edit",
     element: (
-      <RootLayout>
-        <UserEdit />
-      </RootLayout>
+      <ProtectedRoute>
+        <RootLayout>
+          <UserEdit />
+        </RootLayout>
+      </ProtectedRoute>
     ),
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
