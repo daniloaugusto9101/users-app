@@ -1,17 +1,16 @@
 import { Outlet } from "react-router-dom"
+import { Toaster } from "@/components/ui/sonner"
+import Header from "@/components/Header"
 
 export default function RootLayout() {
   return (
-    <>
-      {/* <Header /> */}
-      {/* <p>Meu header</p> */}
-      <section>
-        {/* INICIO - Renderização das páginas */}
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main className="container mx-auto px-4 py-6">
         <Outlet />
-        {/* FIM - Renderização das páginas */}
-      </section>
-      {/* <p>Meu footer</p> */}
-      {/* <Footer /> */}
-    </>
+      </main>
+
+      <Toaster />
+    </div>
   )
 }
