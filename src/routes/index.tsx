@@ -1,5 +1,6 @@
 import RootLayout from "@/layout/RootLayout"
 import UserList from "@/pages/UserList"
+import { UserNew } from "@/pages/UserNew"
 import { createBrowserRouter } from "react-router-dom"
 
 export const router = createBrowserRouter([
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <UserList />,
+      },
+      {
+        path: "/users/new",
+        element: <UserNew />,
       },
     ],
   },
