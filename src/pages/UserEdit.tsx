@@ -2,7 +2,6 @@ import { useParams, useNavigate } from "react-router"
 import { useState } from "react"
 
 import { toast } from "sonner"
-import { mockUsers } from "@/lib/mock-data"
 import type { User } from "@/types/user"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
@@ -35,7 +34,7 @@ export function UserEdit() {
     user || {
       name: "",
       email: "",
-      profile: "Usuário",
+      type: "Usuário",
       status: "Ativo",
     },
   )
@@ -119,14 +118,14 @@ export function UserEdit() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="profile">Perfil *</Label>
+              <Label htmlFor="type">Perfil *</Label>
               <Select
-                value={formData.profile}
-                onValueChange={(value: User["profile"]) =>
-                  setFormData({ ...formData, profile: value })
+                value={formData.type}
+                onValueChange={(value: User["type"]) =>
+                  setFormData({ ...formData, type: value })
                 }
               >
-                <SelectTrigger id="profile">
+                <SelectTrigger id="type">
                   <SelectValue placeholder="Selecione o perfil" />
                 </SelectTrigger>
                 <SelectContent>

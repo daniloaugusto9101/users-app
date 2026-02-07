@@ -29,7 +29,7 @@ export function UserNew() {
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
     email: "",
-    profile: "Usuário",
+    type: "Usuário",
     status: "Ativo",
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -96,14 +96,14 @@ export function UserNew() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="profile">Perfil *</Label>
+              <Label htmlFor="type">Perfil *</Label>
               <Select
-                value={formData.profile}
-                onValueChange={(value: User["profile"]) =>
-                  setFormData({ ...formData, profile: value })
+                value={formData.type}
+                onValueChange={(value: User["type"]) =>
+                  setFormData({ ...formData, type: value })
                 }
               >
-                <SelectTrigger id="profile">
+                <SelectTrigger id="type">
                   <SelectValue placeholder="Selecione o perfil" />
                 </SelectTrigger>
                 <SelectContent>

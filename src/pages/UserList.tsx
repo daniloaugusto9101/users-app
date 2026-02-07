@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { mockUsers } from "@/lib/mock-data"
 import { Eye, Mail, Pencil, Trash2 } from "lucide-react"
 import React from "react"
 import type { User } from "@/types/user"
@@ -24,11 +23,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner"
+import useFetchUsers from "@/hooks/useFetchUsers"
 
 export default function UserList() {
   const navigate = useNavigate()
-  const [users, setUsers] = React.useState<User[]>(mockUsers)
   const [userToDelete, setUserToDelete] = React.useState<User | null>(null)
+
+  const { users } = useFetchUsers()
 
   const handleDelete = () => {
     if (userToDelete) {
@@ -80,7 +81,7 @@ export default function UserList() {
                       {user.name}
                     </CardTitle>
                     <p className="text-xs text-muted-foreground mt-0.5">
-                      {user.profile}
+                      {user.type}
                     </p>
                   </div>
                 </div>
