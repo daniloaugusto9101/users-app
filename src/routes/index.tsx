@@ -1,8 +1,8 @@
-import RootLayout from "@/layout/RootLayout"
-import { UserEdit } from "@/pages/UserEdit"
-import UserList from "@/pages/UserList"
-import { UserNew } from "@/pages/UserNew"
-import { createBrowserRouter } from "react-router-dom"
+import RootLayout from "@/layout/RootLayout";
+import { UserEdit } from "@/pages/UserEdit";
+import UserList from "@/pages/UserList";
+import { UserNew } from "@/pages/UserNew";
+import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
@@ -24,4 +24,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+]);

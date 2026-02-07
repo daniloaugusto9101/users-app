@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { UserPlus } from "lucide-react"
-import { useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button";
+import { UserPlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function HeaderUserList() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="flex justify-between items-center">
@@ -16,5 +16,5 @@ export default function HeaderUserList() {
         Novo Usuário
       </Button>
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { Outlet } from "react-router-dom"
-import { Toaster } from "@/components/ui/sonner"
-import Header from "@/components/Header"
+import { Outlet } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner";
+import Header from "@/components/Header";
 
 export default function RootLayout() {
   return (
@@ -12,5 +12,5 @@ export default function RootLayout() {
 
       <Toaster />
     </div>
-  )
+  );
 }

@@ -1,56 +1,43 @@
-import { useNavigate } from "react-router"
-import { useState } from "react"
-import { ArrowLeft } from "lucide-react"
-import { toast } from "sonner"
-import type { User } from "@/types/user"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
+import { useNavigate } from "react-router";
+import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
+import type { User } from "@/types/user";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 export function UserNew() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
     email: "",
     type: "Usuário",
     status: "Ativo",
-  })
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!formData.name || !formData.email) {
-      toast.error("Por favor, preencha todos os campos obrigatórios")
-      return
+      toast.error("Por favor, preencha todos os campos obrigatórios");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     // Simular chamada de API
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setIsLoading(false)
-    toast.success("Usuário criado com sucesso!")
-    navigate("/")
-  }
+    setIsLoading(false);
+    toast.success("Usuário criado com sucesso!");
+    navigate("/");
+  };
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -63,46 +50,22 @@ export function UserNew() {
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle>Novo Usuário</CardTitle>
-            <CardDescription>
-              Adicione um novo usuário ao sistema
-            </CardDescription>
+            <CardDescription>Adicione um novo usuário ao sistema</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="name">Nome *</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                placeholder="Digite o nome completo"
-                required
-              />
+              <Input id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Digite o nome completo" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                placeholder="usuario@exemplo.com"
-                required
-              />
+              <Input id="email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="usuario@exemplo.com" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="type">Perfil *</Label>
-              <Select
-                value={formData.type}
-                onValueChange={(value: User["type"]) =>
-                  setFormData({ ...formData, type: value })
-                }
-              >
+              <Select value={formData.type} onValueChange={(value: User["type"]) => setFormData({ ...formData, type: value })}>
                 <SelectTrigger id="type">
                   <SelectValue placeholder="Selecione o perfil" />
                 </SelectTrigger>
@@ -117,11 +80,7 @@ export function UserNew() {
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label htmlFor="status">Status</Label>
-                <div className="text-sm text-muted-foreground">
-                  {formData.status === "Ativo"
-                    ? "O usuário pode acessar o sistema"
-                    : "O usuário não pode acessar o sistema"}
-                </div>
+                <div className="text-sm text-muted-foreground">{formData.status === "Ativo" ? "O usuário pode acessar o sistema" : "O usuário não pode acessar o sistema"}</div>
               </div>
               <Switch
                 id="status"
@@ -139,17 +98,12 @@ export function UserNew() {
             <Button type="submit" disabled={isLoading}>
               {isLoading ? "Criando..." : "Criar Usuário"}
             </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => navigate("/")}
-              disabled={isLoading}
-            >
+            <Button type="button" variant="secondary" onClick={() => navigate("/")} disabled={isLoading}>
               Cancelar
             </Button>
           </CardFooter>
         </form>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,44 +1,31 @@
-import { useParams, useNavigate } from "react-router"
-import React, { useState } from "react"
+import { useParams, useNavigate } from "react-router";
+import React, { useState } from "react";
 
-import { toast } from "sonner"
-import type { User } from "@/types/user"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import useFethUserDetails from "@/hooks/useFethUserDetails"
+import { toast } from "sonner";
+import type { User } from "@/types/user";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import useFethUserDetails from "@/hooks/useFethUserDetails";
 
 export function UserEdit() {
-  const navigate = useNavigate()
-  const { id } = useParams()
+  const navigate = useNavigate();
+  const { id } = useParams();
 
-  const user = useFethUserDetails(id)
+  const user = useFethUserDetails(id);
 
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
     email: "",
     type: "usuario",
     status: "Ativo",
-  })
+  });
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {
     if (user) {
@@ -47,9 +34,9 @@ export function UserEdit() {
         email: user.email || "",
         type: user.type || "usuario",
         status: user.status || "Ativo",
-      })
+      });
     }
-  }, [user])
+  }, [user]);
 
   if (!user) {
     return (
@@ -64,26 +51,26 @@ export function UserEdit() {
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!formData.name || !formData.email) {
-      toast.error("Por favor, preencha todos os campos obrigatórios")
-      return
+      toast.error("Por favor, preencha todos os campos obrigatórios");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     // Simular chamada de API
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setIsLoading(false)
-    toast.success("Usuário atualizado com sucesso!")
-    navigate("/")
-  }
+    setIsLoading(false);
+    toast.success("Usuário atualizado com sucesso!");
+    navigate("/");
+  };
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -96,46 +83,22 @@ export function UserEdit() {
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle>Editar Usuário</CardTitle>
-            <CardDescription>
-              Atualize as informações do usuário
-            </CardDescription>
+            <CardDescription>Atualize as informações do usuário</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="name">Nome *</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                placeholder="Digite o nome completo"
-                required
-              />
+              <Input id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Digite o nome completo" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                placeholder="usuario@exemplo.com"
-                required
-              />
+              <Input id="email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="usuario@exemplo.com" required />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="type">Perfil *</Label>
-              <Select
-                value={formData.type}
-                onValueChange={(value: User["type"]) =>
-                  setFormData({ ...formData, type: value })
-                }
-              >
+              <Select value={formData.type} onValueChange={(value: User["type"]) => setFormData({ ...formData, type: value })}>
                 <SelectTrigger id="type">
                   <SelectValue placeholder="Selecione o perfil" />
                 </SelectTrigger>
@@ -150,11 +113,7 @@ export function UserEdit() {
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label htmlFor="status">Status</Label>
-                <div className="text-sm text-muted-foreground">
-                  {formData.status === "Ativo"
-                    ? "O usuário pode acessar o sistema"
-                    : "O usuário não pode acessar o sistema"}
-                </div>
+                <div className="text-sm text-muted-foreground">{formData.status === "Ativo" ? "O usuário pode acessar o sistema" : "O usuário não pode acessar o sistema"}</div>
               </div>
               <Switch
                 id="status"
@@ -172,17 +131,12 @@ export function UserEdit() {
             <Button type="submit" disabled={isLoading}>
               {isLoading ? "Salvando..." : "Salvar"}
             </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => navigate("/")}
-              disabled={isLoading}
-            >
+            <Button type="button" variant="secondary" onClick={() => navigate("/")} disabled={isLoading}>
               Cancelar
             </Button>
           </CardFooter>
         </form>
       </Card>
     </div>
-  )
+  );
 }
