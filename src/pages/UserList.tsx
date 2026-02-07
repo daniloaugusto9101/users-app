@@ -7,12 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { mockUsers } from "@/lib/mock-data"
 import { Eye, Mail, Pencil, Trash2, UserPlus } from "lucide-react"
+import React from "react"
 import { useNavigate } from "react-router-dom"
+import type { User } from "@/types/user"
 
 export default function UserList() {
+  const [users, setUsers] = React.useState<User[]>(mockUsers)
   const navigate = useNavigate()
-  const paginatedUsers = []
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -30,7 +33,7 @@ export default function UserList() {
       </div>
 
       {/* Cards Grid */}
-      {paginatedUsers.length === 0 ? (
+      {users.length === 0 ? (
         <Card>
           <CardContent className="py-10 text-center text-muted-foreground">
             Nenhum usuário encontrado
@@ -38,7 +41,7 @@ export default function UserList() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {paginatedUsers.map((user) => (
+          {users.map((user) => (
             <Card
               key={user.id}
               className="group relative overflow-hidden hover:shadow-md transition-all"
@@ -113,28 +116,6 @@ export default function UserList() {
           ))}
         </div>
       )}
-
-      {/* Modal de confirmação de exclusão */}
-      {/* <AlertDialog open={!!userToDelete} onOpenChange={() => setUserToDelete(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Confirmar exclusão</AlertDialogTitle>
-            <AlertDialogDescription>
-              Tem certeza que deseja excluir o usuário <strong>{userToDelete?.name}</strong>?
-              Esta ação é irreversível e não poderá ser desfeita.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              Confirmar exclusão
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
     </div>
   )
 }
