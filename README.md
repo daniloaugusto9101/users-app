@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# users-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bem-vindo ao **users-app**!
 
-Currently, two official plugins are available:
+Desenvolvida com **React**, **Vite** e **TypeScript**, oferece uma experiência rápida, segura e intuitiva, com autenticação, rotas protegidas, interface responsiva e integração com API REST
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Principais recursos:
 
-## React Compiler
+- Cadastro, edição e exclusão de usuários
+- Autenticação com token JWT
+- Interface amigável
+- Rotas protegidas para segurança
+- Deploy automático na Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+> **Acesse a aplicação online:**
+>
+> <p>
+>   <a href="https://users-app-danilo.vercel.app/" target="_blank" style="font-size:1.2em;font-weight:bold;">🚀 https://users-app-danilo.vercel.app/</a>
+> </p>
 
-## Expanding the ESLint configuration
+## Screenshots
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<div style="display: flex; gap: 16px; align-items: flex-start;">
+  <div style="flex: 1; text-align: center;">
+    <img src="docs/login.png" alt="Tela de Login" style="max-width: 100%; height: auto; border: 1px solid #ccc;" />
+    <p><strong>Tela de Login</strong></p>
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <img src="docs/users.png" alt="Lista de Usuários" style="max-width: 100%; height: auto; border: 1px solid #ccc;" />
+    <p><strong>Lista de Usuários</strong></p>
+  </div>
+</div>
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Arquitetura
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+<div>
+  <img src="docs/arquitetura.jpg" alt="Arquitetura do Projeto" style="max-width:400px;width:100%;height:auto;border:1px solid #ccc;" />
+  <p><strong>Arquitetura do Projeto</strong></p>
+</div>
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Estrutura de Pastas
+
+- `src/app/` — Componentes principais da aplicação.
+- `src/components/` — Componentes reutilizáveis (ex: Header, ProtectedRoute, UI components).
+- `src/config/` — Configurações globais (ex: http.ts para configuração do axios ou fetch).
+- `src/hooks/` — Custom hooks para lógica de autenticação, CRUD de usuários, etc.
+- `src/layout/` — Layouts principais da aplicação.
+- `src/lib/` — Funções utilitárias.
+- `src/pages/` — Páginas principais (Login, UserList, UserEdit, UserNew, NotFound).
+- `src/routes/` — Definição das rotas da aplicação.
+- `src/service/` — Serviços para comunicação com a API (ex: AuthService, UserServices).
+- `src/types/` — Tipagens TypeScript (ex: user.ts).
+
+## Principais Arquivos e Funcionalidades
+
+- **Rotas (`src/routes/index.tsx`)**: Utiliza `react-router-dom` para definir rotas protegidas e públicas, com componentes como `ProtectedRoute` e `RootLayout`.
+- **Serviços (`src/service/`)**:
+  - `AuthService.ts`: Login de usuário via API.
+  - `UserServices.ts`: CRUD de usuários (listar, buscar detalhes, criar, editar, deletar).
+- **Hooks (`src/hooks/`)**:
+  - `useAuth.ts`: Gerencia autenticação e token no localStorage.
+  - `useFetchUsers.ts`: Busca e armazena lista de usuários.
+  - Outros hooks para criar, editar e deletar usuários.
+- **Componentes de UI (`src/components/ui/`)**: Botões, inputs, cards, alertas, etc.
+
+## Observações Importantes
+
+- **Autenticação**: Utiliza token JWT salvo no localStorage. O hook `useAuth` centraliza login/logout.
+- **Rotas protegidas**: O componente `ProtectedRoute` garante que apenas usuários autenticados acessem rotas restritas.
+- **Consumo de API**: Todos os serviços usam um arquivo de configuração HTTP centralizado (`src/config/http.ts`).
+- **Tipagem**: O projeto é fortemente tipado com TypeScript, especialmente para entidades como `User`.
+
+## Como rodar o projeto localmente
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/daniloaugusto9101/users-app.git
+cd users-app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Instale as dependências (na raiz do projeto):
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+3. Rode o projeto (na raiz do projeto):
+
+```bash
+npm run dev
+```
+
+> **Importante:** Para que a comunicação funcione corretamente, a API também precisa estar rodando localmente. Certifique-se de iniciar o backend antes de acessar o frontend.
+
+> Repositório da API: [https://github.com/daniloaugusto9101/users-api](https://github.com/daniloaugusto9101/users-api)
