@@ -1,5 +1,5 @@
-import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 interface RootLayoutProps {
   children: React.ReactNode;

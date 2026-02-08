@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import UserServices from '@/service/UserServices';
 import type { User } from '@/types/user';
+import { useState } from 'react';
 
 
 const useEditUser = () => {

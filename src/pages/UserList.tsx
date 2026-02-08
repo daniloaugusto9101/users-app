@@ -1,15 +1,15 @@
+import HeaderUserList from "@/components/HeaderUserList";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import useDeleteUser from "@/hooks/useDeleteUser";
+import useFetchUsers from "@/hooks/useFetchUsers";
+import type { User } from "@/types/user";
 import { Eye, Mail, Pencil, Trash2 } from "lucide-react";
 import React from "react";
-import type { User } from "@/types/user";
-import HeaderUserList from "@/components/HeaderUserList";
 import { useNavigate } from "react-router-dom";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import useFetchUsers from "@/hooks/useFetchUsers";
-import useDeleteUser from "@/hooks/useDeleteUser";
 
 export default function UserList() {
   const navigate = useNavigate();

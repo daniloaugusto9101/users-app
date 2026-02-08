@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router";
-import { Home, ArrowLeft } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Home } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export function NotFound() {
   const navigate = useNavigate();

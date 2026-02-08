@@ -1,8 +1,3 @@
-import { useNavigate } from "react-router";
-import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
-import type { User } from "@/types/user";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import useCreateUser from "@/hooks/useCreateUser";
+import type { User } from "@/types/user";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export function UserNew() {
   const navigate = useNavigate();

@@ -17,7 +17,6 @@ const deleteUser = async (idUser: string) => {
 
 const editUser = async (user: User) => {
     const { data } = await api.put(`/users/${user.id}`, user);
-    console.log("Resposta da API:", data); // Log para verificar a resposta
     return data;
 };
 
