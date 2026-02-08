@@ -6,39 +6,52 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import useDeleteUser from "@/hooks/useDeleteUser";
 import useFetchUsers from "@/hooks/useFetchUsers";
 import type { User } from "@/types/user";
-import { Eye, Mail, Pencil, Trash2 } from "lucide-react";
-import React from "react";
+import { Eye, Loader2, Mail, Pencil, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function UserList() {
   const navigate = useNavigate();
-  const [userToDelete, setUserToDelete] = React.useState<User | null>(null);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
-  const { users, fetchUsers } = useFetchUsers();
-  const { deleteUser } = useDeleteUser();
+  const { users, fetchUsers, isFetchingUsers, fetchUsersError } = useFetchUsers();
+  const { deleteUser, isDeletingUser } = useDeleteUser();
 
-  const handleDelete = () => {
-    if (userToDelete) {
-      deleteUser(userToDelete.id.toString())
-        .then(() => {
-          toast.success("Usuário excluído com sucesso!");
-          setUserToDelete(null);
-          fetchUsers();
-        })
-        .catch((err) => {
-          toast.error("Erro ao excluir usuário");
-          console.error(err);
-        });
+  const handleDelete = async () => {
+    if (!userToDelete) return;
+
+    const success = await deleteUser(userToDelete.id.toString());
+
+    if (success) {
+      toast.success("Usuário excluído com sucesso!");
+      setUserToDelete(null);
+      fetchUsers();
+    } else {
+      toast.error("Erro ao excluir usuário");
     }
   };
 
+  if (isFetchingUsers) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (fetchUsersError) {
+    return (
+      <Card>
+        <CardContent className="py-10 text-center text-destructive">{fetchUsersError}</CardContent>
+      </Card>
+    );
+  }
+
   return (
     <div className="space-y-6">
-      {/* Header */}
       <HeaderUserList />
 
-      {/* Cards Grid */}
       {users.length === 0 ? (
         <Card>
           <CardContent className="py-10 text-center text-muted-foreground">Nenhum usuário encontrado</CardContent>
@@ -47,7 +60,6 @@ export default function UserList() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {users.map((user) => (
             <Card key={user.id} className="group relative overflow-hidden hover:shadow-md transition-all">
-              {/* Status Badge no canto */}
               <div className="absolute top-3 right-3">
                 <Badge variant={user.status === "Ativo" ? "default" : "secondary"}>ID: {user.id}</Badge>
               </div>
@@ -95,7 +107,6 @@ export default function UserList() {
         </div>
       )}
 
-      {/* Modal de confirmação de exclusão */}
       <AlertDialog open={!!userToDelete} onOpenChange={() => setUserToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -105,9 +116,16 @@ export default function UserList() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-              Confirmar exclusão
+            <AlertDialogCancel disabled={isDeletingUser}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} disabled={isDeletingUser} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              {isDeletingUser ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Excluindo...
+                </>
+              ) : (
+                "Confirmar exclusão"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
