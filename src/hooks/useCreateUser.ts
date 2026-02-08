@@ -1,12 +1,12 @@
 import UserServices from '@/service/UserServices';
 import type { User } from '@/types/user';
-import { useState } from 'react';
+import React from 'react';
 
 type CreateUserPayload = Omit<User, 'id'>;
 
 const useCreateUser = () => {
-  const [isCreatingUser, setIsCreatingUser] = useState(false);
-  const [createUserError, setCreateUserError] = useState<string | null>(null);
+  const [isCreatingUser, setIsCreatingUser] = React.useState(false);
+  const [createUserError, setCreateUserError] = React.useState<string | null>(null);
 
   const createUser = async (payload: CreateUserPayload) => {
     setIsCreatingUser(true);

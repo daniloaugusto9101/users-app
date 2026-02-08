@@ -1,11 +1,11 @@
 import UserServices from '@/service/UserServices';
 import type { User } from '@/types/user';
-import { useState } from 'react';
+import React from 'react';
 
 
 const useEditUser = () => {
-  const [isEditingUser, setIsEditingUser] = useState(false);
-  const [editUserError, setEditUserError] = useState<string | null>(null);
+  const [isEditingUser, setIsEditingUser] = React.useState(false);
+  const [editUserError, setEditUserError] = React.useState<string | null>(null);
 
   const editUser = async (payload: User) => {
     setIsEditingUser(true);
