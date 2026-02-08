@@ -14,7 +14,7 @@ import useCreateUser from "@/hooks/useCreateUser";
 export function UserNew() {
   const navigate = useNavigate();
 
-  const { createUser, isCreatingUser, createUserError } = useCreateUser();
+  const { createUser } = useCreateUser();
 
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
@@ -22,7 +22,7 @@ export function UserNew() {
     type: "usuario",
     status: "Ativo",
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

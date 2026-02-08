@@ -18,7 +18,7 @@ export function UserEdit() {
 
   const user = useFethUserDetails(id);
 
-  const { editUser, isEditingUser, editUserError } = useEditUser();
+  const { editUser } = useEditUser();
 
   const [formData, setFormData] = useState<Partial<User>>({
     name: "",
@@ -27,7 +27,7 @@ export function UserEdit() {
     status: "Ativo",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   React.useEffect(() => {
     if (user) {
