@@ -6,9 +6,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import AuthService from "@/service/AuthService";
 
 export function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,18 +27,19 @@ export function Login() {
     }
 
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     try {
-      const success = true;
+      const response = await AuthService.login({ email, password });
 
-      if (success) {
+      if (response.token) {
+        login(response.token);
         navigate("/");
       } else {
-        setError("Email ou senha inválidos");
+        setError("Resposta inválida do servidor");
       }
-    } catch (err) {
-      setError("Erro ao fazer login. Tente novamente.");
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || "Email ou senha inválidos";
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -85,10 +89,6 @@ export function Login() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Entrando..." : "Entrar"}
             </Button>
-
-            <div className="text-center text-sm text-muted-foreground mt-4">
-              <p>Use qualquer email e senha para acessar</p>
-            </div>
           </form>
         </CardContent>
       </Card>
