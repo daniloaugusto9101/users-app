@@ -8,7 +8,7 @@ import useEditUser from "@/hooks/useEditUser";
 import useFethUserDetails from "@/hooks/useFethUserDetails";
 import type { User } from "@/types/user";
 import { ArrowLeft } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
@@ -20,14 +20,14 @@ export function UserEdit() {
 
   const { editUser } = useEditUser();
 
-  const [formData, setFormData] = useState<Partial<User>>({
+  const [formData, setFormData] = React.useState<Partial<User>>({
     name: "",
     email: "",
     type: "usuario",
     status: "Ativo",
   });
 
-  const [isLoading] = useState(false);
+  const [isLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (user) {

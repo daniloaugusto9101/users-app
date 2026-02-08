@@ -7,13 +7,13 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import useFetchUsers from "@/hooks/useFetchUsers";
 import type { User } from "@/types/user";
 import { Eye, Loader2, Mail, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function UserList() {
   const navigate = useNavigate();
-  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [userToDelete, setUserToDelete] = React.useState<User | null>(null);
 
   const { users, fetchUsers, isFetchingUsers, fetchUsersError } = useFetchUsers();
   const { deleteUser, isDeletingUser } = useDeleteUser();

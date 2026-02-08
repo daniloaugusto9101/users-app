@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import useCreateUser from "@/hooks/useCreateUser";
 import type { User } from "@/types/user";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -16,13 +16,13 @@ export function UserNew() {
 
   const { createUser } = useCreateUser();
 
-  const [formData, setFormData] = useState<Partial<User>>({
+  const [formData, setFormData] = React.useState<Partial<User>>({
     name: "",
     email: "",
     type: "usuario",
     status: "Ativo",
   });
-  const [isLoading] = useState(false);
+  const [isLoading] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
